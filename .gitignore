@@ -1,5 +1,5 @@
 */.ipynb_checkpoints
 */Makefile
 */tmp*
-./python/
-./singular/
+./python/*
+./singular/*
