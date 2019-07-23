@@ -1,0 +1,26 @@
+/*
+１変数多項式のGCDを求めるアルゴリズム(再帰を使った実装)
+*/
+
+ring r = QQ, (x), dp;
+poly f = x2 + x + 1;
+poly g = x + 2;
+//poly g = f * 2;
+
+proc euclid(poly f, poly g){
+  poly h = f;
+  poly r = g;
+  poly rem;
+  while(r != 0){
+    rem = reduce(h,r);
+    h = r;
+    r = rem;
+  }
+  return (h);
+}
+
+euclid(f, g);
+//euclid(g, f);
+gcd(f, g);
+
+quit;

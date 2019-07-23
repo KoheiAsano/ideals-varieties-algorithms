@@ -1,0 +1,26 @@
+/*
+1変数の割り算(教科書通りの実装)
+*/
+
+ring r = QQ, (x), dp;
+poly f = x2 + x + 1;
+poly g = x + 2;
+
+
+
+
+proc divides(poly f, poly g)
+{
+  poly q = 0;
+  poly r = f;
+  while(r != 0 and deg(g) <= deg(r)){
+    q = q + lead(r)/lead(g);
+    r = r - lead(r)/lead(g)*g;
+  }
+  return (q, r);
+}s
+
+reduce(f,g);
+divides(f,g);
+
+quit;

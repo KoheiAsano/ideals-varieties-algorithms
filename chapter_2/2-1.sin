@@ -1,0 +1,37 @@
+ring r = QQ, (x), dp;
+/*
+
+// 1-b
+poly f = x5 - 4x + 1;
+poly g = x3 - x2 + x;
+
+
+// 1-c
+poly f = x2 - 4x + 4;
+poly g = gcd(x4 -6x2 + 12x -8, 2x3 -10x2 + 16x -8);
+
+
+// 1-d
+poly f = x3 - 1;
+poly g = gcd(x9-1, x5 + x3 -x2 -1);
+*/
+
+
+proc divides(poly f, poly g)
+{
+  poly q = 0;
+  poly r = f;
+  while(r != 0 and deg(g) <= deg(r)){
+    q = q + lead(r)/lead(g);
+    r = r - lead(r)/lead(g)*g;
+  }
+  // return monic remainder polynomial
+  return (q, simplify(r,1));
+}
+list d_res;
+d_res = divides(f,g);
+"GCD(fi):" + string(g);
+("Quotient, Remainder of gcd(fi) divides f:"+string(d_res));
+;
+
+quit;
