@@ -3,3 +3,9 @@
 */tmp*
 ./python/*
 ./singular/*
+*/*.dvi
+*/*.aux
+*/*.fdb_latexmk
+*/*.fls
+*/*.log
+*/*.synctex.gz
