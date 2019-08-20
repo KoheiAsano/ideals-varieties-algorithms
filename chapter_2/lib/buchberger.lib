@@ -42,7 +42,7 @@ proc lcm(poly f, poly g){
   intvec g_muldeg = leadexp(g);
   int i;
   intvec gamma;
-  for(i=1;i<size(f_muldeg);i++){
+  for(i=1;i<=size(f_muldeg);i++){
     gamma[i] = max(f_muldeg[i],g_muldeg[i]);
   }
   return (monomial(gamma));
