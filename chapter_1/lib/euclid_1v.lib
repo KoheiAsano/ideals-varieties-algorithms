@@ -1,0 +1,15 @@
+/*
+１変数多項式のGCDを求めるアルゴリズム
+*/
+
+proc euclid(poly f, poly g){
+  poly h = f;
+  poly r = g;
+  poly rem;
+  while(r != 0){
+    rem = reduce(h,r);
+    h = r;
+    r = rem;
+  }
+  return (h);
+}

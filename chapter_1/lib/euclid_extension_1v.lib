@@ -1,0 +1,17 @@
+/*
+１変数多項式のGCDを求めて、それを生成する係数も求めるアルゴリズム(再帰を使った実装)
+*/
+
+proc euclid_ext(poly f, poly g, poly a, poly b){
+  if(g == 0){
+    return (f, 1, 0);
+  }
+  else{
+    poly d;
+    // a_n, b_n
+    d, a, b = euclid(g, reduce(f, g), a, b);
+    poly before_a = b;
+    poly before_b = a - b*f/g;
+    return (d, before_a, before_b);
+  }
+}

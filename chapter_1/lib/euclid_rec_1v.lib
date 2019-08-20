@@ -1,0 +1,12 @@
+/*
+１変数多項式のGCDを求めるアルゴリズム(再帰を使った実装)
+*/
+
+proc euclid(poly f, poly g){
+  if(g == 0){
+    return (f);
+  }
+  else{
+    return (euclid(g, reduce(f, g)));
+  }
+}
