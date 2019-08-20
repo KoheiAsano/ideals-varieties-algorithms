@@ -8,7 +8,7 @@ poly g = x + 2;
 
 //poly g = f * 2;
 
-proc euclid(poly f, poly g, poly a, poly b){
+proc euclid_ext(poly f, poly g, poly a, poly b){
   if(g == 0){
     return (f, 1, 0);
   }
@@ -23,7 +23,7 @@ proc euclid(poly f, poly g, poly a, poly b){
 }
 poly a = 0;
 poly b = 0;
-euclid(f, g, a, b);
+euclid_ext(f, g, a, b);
 gcd(f, g);
 
 quit;
