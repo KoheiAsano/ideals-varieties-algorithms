@@ -1,0 +1,82 @@
+proc norm_form(poly f, ideal fs){
+  // output
+  poly r = 0;
+  list a;
+
+  // init
+  poly p = f;
+  int s = ncols(fs);
+  int i;
+  for(i=1;i<=s;i++){
+    a[i] = 0;
+  }
+
+  int divided = 0; // divisionoccured
+
+  while(p != 0){
+    i = 1;
+    divided = 0;
+
+    while(i <= s && divided == 0){
+      if(reduce(lead(p),lead(fs[i])) == 0){
+        a[i] = a[i] + lead(p)/lead(fs[i]);
+        p = p - (lead(p)/lead(fs[i]))*fs[i];
+        divided = 1;
+      }else{
+        i = i + 1;
+      }
+    }
+
+    if (divided == 0){
+      r = r + lead(p);
+      p = p - lead(p);
+    }
+
+  }
+  return (r);
+}
+
+proc lcm(poly f, poly g){
+
+  intvec f_muldeg = leadexp(f);
+  intvec g_muldeg = leadexp(g);
+  int i;
+  intvec gamma;
+  for(i=1;i<size(f_muldeg);i++){
+    gamma[i] = max(f_muldeg[i],g_muldeg[i]);
+  }
+  return (monomial(gamma));
+}
+
+
+proc s_poly(poly f, poly g)
+{
+  poly l = lcm(f,g);
+  poly lf = lead(f);
+  poly lg = lead(g);
+  return ((l/lf)*f - (l/lg)*g);
+}
+
+
+proc buchberger(ideal f)
+{
+  ideal g = f;
+  int i,j;
+  poly s;
+  ideal g_t;
+  while(1){
+    g_t = g;
+    for (i=1;i<=ncols(g_t);i++){
+      for (j=i+1;j<=ncols(g_t);j++){
+        s = norm_form(s_poly(g_t[i],g_t[j]),g_t);
+        if (s != 0){
+          g+s;
+        }
+      }
+    }
+    if (ncols(g_t) == ncols(g)){
+      break
+    }
+  }
+  return (g);
+}

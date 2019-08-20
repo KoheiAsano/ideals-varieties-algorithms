@@ -1,0 +1,16 @@
+LIB "lib/buchberger.lib";
+
+
+ring r = QQ, (y,z,x), lp;
+ideal f = y-x2,z-x3;
+
+buchberger(f);
+
+
+// 順序置換
+ring r = QQ, (x,y,z), lp;
+
+ideal f = y-x2,z-x3;
+
+buchberger(f);
+quit;
