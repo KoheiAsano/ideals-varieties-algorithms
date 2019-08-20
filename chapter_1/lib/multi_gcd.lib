@@ -1,0 +1,24 @@
+proc euclid_two(poly f, poly g){
+  poly h = f;
+  poly r = g;
+  poly rem;
+  while(r != 0){
+    rem = reduce(h,r);
+    h = r;
+    r = rem;
+  }
+  return (h);
+}
+
+
+
+
+proc euclid(list l){
+  poly h = l[1];
+  int cnt = 1;
+  while(cnt != size(l)){
+    h = euclid_two(h, l[cnt+1]);
+    cnt++;
+  }
+  return (h);
+}
