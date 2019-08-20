@@ -1,0 +1,40 @@
+proc divides(poly f, ideal fs){
+  // output
+  poly r = 0;
+  list a;
+
+  // init
+  poly p = f;
+  int s = ncols(fs);
+  int i;
+  for(i=1;i<=s;i++){
+    a[i] = 0;
+  }
+
+  int divided = 0; // divisionoccured
+
+  while(p != 0){
+    i = 1;
+    divided = 0;
+
+    // 割り算ステップdivisorで割り切れるかチェック,割れたら割る
+    while(i <= s && divided == 0){
+    // 割り切れるかは次数では判断できないので組み込みまかせ
+      if(reduce(lead(p),lead(fs[i])) == 0){
+        a[i] = a[i] + lead(p)/lead(fs[i]);
+        p = p - (lead(p)/lead(fs[i]))*fs[i];
+        divided = 1;
+      }else{
+        i = i + 1;
+      }
+    }
+
+    // 余りステップ(divided == 0のみ => pの先頭項が余りになる)
+    if (divided == 0){
+      r = r + lead(p);
+      p = p - lead(p);
+    }
+
+  }
+  return (a, r);
+}

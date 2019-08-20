@@ -1,0 +1,44 @@
+LIB './lib/divides.lib';
+
+// EX:2
+// Rational ring with var(x,y,z), degree reverse lexicographical
+ring r = QQ, (x,y,z), lp;
+
+// dividend
+poly f = x2y + xy2 + y2;
+
+// divisor
+ideal fs = xy-1, y2-1;
+
+reduce(f,fs);
+divides(f,fs);
+
+// EX:4 Rational ring with var(x,y,z), lexicographical
+ring r = QQ, (x,y,z), lp;
+// dividend
+poly f = x2y + xy2 + y2;
+
+// divisor
+ideal fs = y2-1,xy-1;
+
+reduce(f,fs);
+divides(f,fs);
+
+// EX:5 Rational ring with var(x,y,z), lexicographical
+// 順番によって余りが変わる例
+ring r = QQ, (x,y,z), lp;
+
+poly f = xy2 - x;
+
+
+
+
+ideal fs = xy+1,y2-1;
+
+reduce(f,fs);
+divides(f,fs);
+
+ideal fs = y2-1,xy+1;
+
+reduce(f,fs);
+divides(f,fs);
