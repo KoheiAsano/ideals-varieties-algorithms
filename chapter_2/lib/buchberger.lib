@@ -70,7 +70,7 @@ proc buchberger(ideal f)
       for (j=i+1;j<=ncols(g_t);j++){
         s = norm_form(s_poly(g_t[i],g_t[j]),g_t);
         if (s != 0){
-          g+s;
+          g = g+s;
         }
       }
     }
