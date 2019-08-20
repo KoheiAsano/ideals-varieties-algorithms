@@ -1,16 +1,22 @@
 LIB "lib/buchberger.lib";
 
+//s-6EX
 
 ring r = QQ, (y,z,x), lp;
 ideal f = y-x2,z-x3;
 
-buchberger(f);
+//buchberger(f);
 
 
-// 順序置換
+// 辞書式の順序を置換
 ring r = QQ, (x,y,z), lp;
-
 ideal f = y-x2,z-x3;
 
+//buchberger(f);
+
+//s-7 EX
+ring r = QQ, (x,y), Dp;
+ideal f = x3 -2xy, x2y - 2y2 + x;
 buchberger(f);
+
 quit;
