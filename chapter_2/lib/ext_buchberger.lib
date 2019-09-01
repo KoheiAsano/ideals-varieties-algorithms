@@ -1,0 +1,105 @@
+LIB "zeroset.lib";
+proc norm_form(poly f, ideal fs){
+  // output
+  poly r = 0;
+  list a;
+
+  // init
+  poly p = f;
+  int s = ncols(fs);
+  int i;
+  for(i=1;i<=s;i++){
+    a[i] = 0;
+  }
+
+  int divided = 0; // divisionoccured
+
+  while(p != 0){
+    i = 1;
+    divided = 0;
+
+    while(i <= s && divided == 0){
+      if(reduce(lead(p),lead(fs[i])) == 0){
+        a[i] = a[i] + lead(p)/lead(fs[i]);
+        p = p - (lead(p)/lead(fs[i]))*fs[i];
+        divided = 1;
+      }else{
+        i = i + 1;
+      }
+    }
+
+    if (divided == 0){
+      r = r + lead(p);
+      p = p - lead(p);
+    }
+
+  }
+  return (r);
+}
+
+proc lcm(poly f, poly g){
+
+  intvec f_muldeg = leadexp(f);
+  intvec g_muldeg = leadexp(g);
+  int i;
+  intvec gamma;
+  for(i=1;i<=size(f_muldeg);i++){
+    gamma[i] = max(f_muldeg[i],g_muldeg[i]);
+  }
+  return (monomial(gamma));
+}
+
+
+proc s_poly(poly f, poly g){
+  poly l = lcm(f,g);
+  poly lf = lead(f);
+  poly lg = lead(g);
+  return ((l/lf)*f - (l/lg)*g);
+}
+
+proc criterion(list pair, ideal g, list B){
+  int i,j,k;
+  for (k=1;k<=ncols(g);k++){
+    if ( !containedQ(B,list(pair[1],k)) && !containedQ(B,list(pair[2],k)) && reduce(lcm(g[pair[1]],g[pair[2]]),lead(g[k])) == 0){
+      return (1);
+    }
+  }
+  return (0);
+}
+
+
+proc ext_buchberger(ideal f){
+  // init
+  ideal g = f;
+  list b;
+  int i,j;
+  int cnt = 1;
+  for (i=1;i<ncols(g);i++){
+    for (j=i+1;j<=ncols(g);j++){
+      b[cnt] = list(i,j);
+      cnt++;
+    }
+  }
+  int t = ncols(g);
+  // 今扱っているIndexペア
+  list pair;
+  poly S;
+  while(cnt-1 != 0){
+    pair = b[1];
+    if (lcm(g[pair[1]],g[pair[2]])!= leadmonom(g[pair[1]])*leadmonom(g[pair[2]]) && !criterion(pair,g)){
+      S = norm_form(s_poly(g[pair[1]],g[pair[2]]),g);
+      if (S != 0){
+        t = t+1;
+        g = g+S;
+        for (i=1;i<t;i++){
+          b[cnt] = list(i,t);
+          cnt++;
+        }
+      }
+    }
+    b = delete(b,1);
+    print(b);
+    cnt--;
+  }
+  return (g);
+}
