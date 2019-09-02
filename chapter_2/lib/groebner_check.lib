@@ -2,9 +2,11 @@ LIB "lib/buchberger.lib";
 
 proc g_check(ideal g){
   int i;
-  for(i=2;i<=ncols(g);i++){
-    if (lead_lcm(g[i],g[i-1]) != leadmonom(g[i])*leadmonom(g[i-1]) || reduce(s_poly(g[i],g[i-1]),g) != 0){
-      return (0);
+  for(i=1;i<ncols(g);i++){
+    for(j=i+1;j<=ncols(g);j++){
+      if (lead_lcm(g[i],g[j]) != leadmonom(g[i])*leadmonom(g[j]) || reduce(s_poly(g[i],g[j]),g) != 0){
+        return (0);
+      }
     }
   }
   return(1);
