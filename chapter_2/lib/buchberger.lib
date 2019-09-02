@@ -36,7 +36,7 @@ proc norm_form(poly f, ideal fs){
   return (r);
 }
 
-proc lcm(poly f, poly g){
+proc lead_lcm(poly f, poly g){
 
   intvec f_muldeg = leadexp(f);
   intvec g_muldeg = leadexp(g);
@@ -51,7 +51,7 @@ proc lcm(poly f, poly g){
 
 proc s_poly(poly f, poly g)
 {
-  poly l = lcm(f,g);
+  poly l = lead_lcm(f,g);
   poly lf = lead(f);
   poly lg = lead(g);
   return ((l/lf)*f - (l/lg)*g);
