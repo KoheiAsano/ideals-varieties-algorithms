@@ -1,0 +1,79 @@
+LIB "zeroset.lib";
+LIB "lib/buchberger.lib";
+
+proc c_buchberger(ideal f)
+{
+  int c=0;
+  ideal g = f;
+  int i,j;
+  poly s;
+  ideal g_t;
+  while(1){
+    g_t = g;
+    for (i=1;i<=ncols(g_t);i++){
+      for (j=i+1;j<=ncols(g_t);j++){
+        s = norm_form(s_poly(g_t[i],g_t[j]),g_t);
+        c++;
+        if (s != 0){
+          g = g+s;
+        }
+      }
+    }
+    if (ncols(g_t) == ncols(g)){
+      break
+    }
+  }
+  return (g,c);
+}
+
+
+proc criterion(intvec pair, ideal g, list B){
+  int k;
+  for (k=1;k<=ncols(g);k++){
+    if ( !(containedQ(B,intvec(pair[1],k)) || containedQ(B,intvec(k,pair[1]))) &&
+    !(containedQ(B,intvec(pair[2],k)) || containedQ(B,intvec(k,pair[2]))) &&
+     reduce(lead_lcm(g[pair[1]],g[pair[2]]),lead(g[k])) == 0){
+      return (1);
+    }
+  }
+  return (0);
+}
+
+
+proc c_ext_buchberger(ideal f){
+  // init
+  int c=0;
+  ideal g = f;
+  list B;
+  int i,j;
+  // stackpointerみたいに使う
+  int cnt = 1;
+  for (i=1;i<ncols(g);i++){
+    for (j=i+1;j<=ncols(g);j++){
+      B[cnt] = intvec(i,j);
+      cnt++;
+    }
+  }
+  int t = ncols(g);
+  // 今扱っているIndexペア
+  intvec pair;
+  poly S;
+  while(cnt-1 != 0){
+    pair = B[1];
+    if (lead_lcm(g[pair[1]],g[pair[2]])!= leadmonom(g[pair[1]])*leadmonom(g[pair[2]]) && !criterion(pair,g,B)){
+      S = norm_form(s_poly(g[pair[1]],g[pair[2]]),g);
+      c++;
+      if (S != 0){
+        t = t+1;
+        g = g+S;
+        for (i=1;i<t;i++){
+          B[cnt] = intvec(i,t);
+          cnt++;
+        }
+      }
+    }
+    B = delete(B,1);
+    cnt--;
+  }
+  return (g,c);
+}
