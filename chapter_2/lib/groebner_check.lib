@@ -1,0 +1,11 @@
+LIB "lib/buchberger.lib";
+
+proc g_check(ideal g){
+  int i;
+  for(i=2;i<=ncols(g);i++){
+    if (lead_lcm(g[i],g[i-1]) != leadmonom(g[i])*leadmonom(g[i-1]) || reduce(s_poly(g[i],g[i-1]),g) != 0){
+      return (0);
+    }
+  }
+  return(1);
+}
