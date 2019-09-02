@@ -1,0 +1,18 @@
+LIB "lib/buchberger.lib";
+
+//s-7 EX
+ring r = QQ, (x,y), Dp;
+ideal f = x3 -2xy, x2y - 2y2 + x;
+ideal g = buchberger(f);
+
+print(g);
+int i, j;
+for (i=1;i<=ncols(g);i++){
+  for (j=i+1;j<=ncols(g);j++){
+    print(i);
+    print(j);
+    print(s_poly(g[i],g[j]));
+    print(reduce(s_poly(g[i],g[j]),g));
+  }
+}
+quit;

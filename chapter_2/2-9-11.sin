@@ -1,0 +1,19 @@
+LIB "lib/counter_buchberger.lib";
+
+
+
+//SS9-11
+
+ring r = QQ, (x,y), Dp;
+ideal f = x3 -2xy, x2y - 2y2 + x;
+ideal g;
+int count;
+g,count = c_ext_buchberger(f);
+g;
+count;
+g,count = c_buchberger(f);
+g;
+count;
+groebner(f);
+
+quit;

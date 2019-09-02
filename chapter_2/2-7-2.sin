@@ -1,0 +1,43 @@
+LIB "lib/buchberger.lib";
+
+
+//2-7-2-a
+ring r = QQ, (x,y), lp;
+ideal f = x2y-1, xy2-x;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+ring r = QQ, (x,y), Dp;
+ideal f = x2y-1, xy2-x;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+//2-7-2-b
+ring r = QQ, (x,y), lp;
+ideal f = x2+y, x4+2x2y+y2+3;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+ring r = QQ, (x,y), Dp;
+ideal f = x2+y, x4+2x2y+y2+3;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+//2-7-2-c
+ring r = QQ, (x,y,z), lp;
+ideal f = x-z4, y-z5;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+ring r = QQ, (x,y,z), Dp;
+ideal f = x-z4, y-z5;
+ideal g = buchberger(f);
+g;
+groebner(f);
+
+quit;

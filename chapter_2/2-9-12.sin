@@ -1,0 +1,26 @@
+LIB "lib/ext_buchberger.lib";
+LIB "lib/groebner_check.lib";
+
+// SS9-12
+proc mora(int n){
+  ideal m = x**(n+1)-y*z**(n-1)*w, x*y**(n-1)-z**n, (x**n)*z-(y**n)*w;
+  return (m);
+}
+
+ring r = QQ, (x,y,z,w), dp;
+ideal f = mora(3);
+print("----mora: N=3---");
+ext_buchberger(f);
+groebner(f);
+
+ideal f = mora(4);
+print("----mora: N=4---");
+ext_buchberger(f);
+groebner(f);
+
+ideal f = mora(5);
+print("----mora: N=5---");
+ext_buchberger(f);
+groebner(f);
+print("----------------");
+quit;

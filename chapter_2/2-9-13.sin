@@ -1,0 +1,90 @@
+LIB "lib/ext_buchberger.lib";
+LIB "lib/groebner_check.lib";
+
+
+
+// SS9-13-a
+ring r = QQ, (x,y,z), lp;
+ideal f = x5+y4+z3-1,x3+y2+z2-1;
+print("-----13-a-lex-----");
+
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+
+print("-----13-a-grevlex----");
+ring r = QQ, (x,y,z), dp;
+ideal f = x5+y4+z3-1,x3+y2+z2-1;
+
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+
+// SS9-13-b
+ring r = QQ, (x,y,z), lp;
+ideal f = x5+y4+z3-1,x3+y3+z2-1;
+print("-----13-b-lex-----");
+
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+
+ring r = QQ, (x,y,z), dp;
+ideal f = x5+y4+z3-1,x3+y3+z2-1;
+
+print("-----13-b-grevlex----");
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+
+// SS9-13-c
+proc mora(int n){
+  ideal m = x**(n+1)-y*z**(n-1)*w, x*y**(n-1)-z**n, (x**n)*z-(y**n)*w;
+  return (m);
+}
+ring r = QQ, (x,y,z,w), lp;
+ideal f = mora(3);
+
+print("-----13-c-lex-----");
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+ring r = QQ, (x,y,z,w), dp;
+ideal f = mora(3);
+
+print("-----13-c-grevlex----");
+ideal g;
+g = ext_buchberger(f);
+g;
+g_check(g);
+
+print("-----builtin----");
+groebner(f);
+
+print("----------------");
+quit;
