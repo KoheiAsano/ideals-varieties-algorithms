@@ -5,10 +5,6 @@ proc g_check(ideal g){
   for(i=1;i<ncols(g);i++){
     for(j=i+1;j<=ncols(g);j++){
       if (lead_lcm(g[i],g[j]) != leadmonom(g[i])*leadmonom(g[j]) && reduce(s_poly(g[i],g[j]),g) != 0){
-        print(g[i]);
-		print(g[j]);
-		print(s_poly(g[i],g[j]));
-		print(reduce(s_poly(g[i],g[j]),g));
 		return (0);
       }
     }
