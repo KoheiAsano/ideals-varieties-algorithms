@@ -76,19 +76,20 @@ proc ext_buchberger(ideal f){
   ideal g = f;
   list B;
   int i,j;
-  // stackpointerみたいに使う
-  int cnt = 1;
+  // queueのtail ポインタ
+  int tail = 1;
   for (i=1;i<ncols(g);i++){
     for (j=i+1;j<=ncols(g);j++){
-      B[cnt] = intvec(i,j);
-      cnt++;
+      B[tail] = intvec(i,j);
+      tail++;
     }
   }
   int t = ncols(g);
   // 今扱っているIndexペア
   intvec pair;
   poly S;
-  while(cnt-1 != 0){
+  // tailが1に戻るまで
+  while(tail-1 != 0){
     pair = B[1];
     if (lead_lcm(g[pair[1]],g[pair[2]])!= leadmonom(g[pair[1]])*leadmonom(g[pair[2]]) && !criterion(pair,g,B)){
       S = norm_form(s_poly(g[pair[1]],g[pair[2]]),g);
@@ -96,13 +97,13 @@ proc ext_buchberger(ideal f){
         t = t+1;
         g = g+S;
         for (i=1;i<t;i++){
-          B[cnt] = intvec(i,t);
-          cnt++;
+          B[tail] = intvec(i,t);
+          tail++;
         }
       }
     }
     B = delete(B,1);
-    cnt--;
+    tail--;
   }
   return (g);
 }
