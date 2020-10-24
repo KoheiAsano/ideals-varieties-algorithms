@@ -5,14 +5,14 @@ LIB "lib/buchberger.lib";
 ring r = QQ, (y,z,x), lp;
 ideal f = y-x2,z-x3;
 
-//buchberger(f);
+buchberger(f);
 
 
 // 辞書式の順序を置換
 ring r = QQ, (x,y,z), lp;
 ideal f = y-x2,z-x3;
 
-//buchberger(f);
+buchberger(f);
 
 //s-7 EX
 ring r = QQ, (x,y), Dp;
